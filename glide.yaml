@@ -1,0 +1,4 @@
+package: gitlab.com/pablo-ruth/gok8s
+import:
+- package: k8s.io/client-go
+  version: kubernetes-1.10.0
