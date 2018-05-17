@@ -13,10 +13,7 @@ import (
 func NewClientFromVault(addr, path, roleID, secretID string) (*kubernetes.Clientset, *rest.Config, error) {
 
 	// Init Vault client
-	client := govault.Client{
-		Address:       addr,
-		TLSSkipVerify: true,
-	}
+	client := govault.NewClient(addr, true)
 
 	// Try to login to Vault with AppRole
 	err := client.AppRoleLogin(roleID, secretID)
