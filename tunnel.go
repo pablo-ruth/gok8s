@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net"
 	"net/http"
 	"strconv"
@@ -45,7 +44,6 @@ func (t *Tunnel) Open() error {
 	if err != nil {
 		return err
 	}
-	log.Printf("Tunnel opened at 127.0.0.1:%d\n", t.Local)
 
 	return nil
 }
