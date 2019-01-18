@@ -13,7 +13,7 @@ import (
 func NewClientFromVault(addr, path, roleID, secretID string) (*kubernetes.Clientset, *rest.Config, error) {
 
 	// Init Vault client
-	client := govault.NewClient(addr, true)
+	client := vault.NewClient(addr, true)
 
 	// Try to login to Vault with AppRole
 	err := client.AppRoleLogin(roleID, secretID)
@@ -26,6 +26,13 @@ func NewClientFromVault(addr, path, roleID, secretID string) (*kubernetes.Client
 	entry, err := client.Read(path, 200)
 	if err != nil {
 		return nil, nil, err
+	}
+
+	// Test if in KV2 mode
+	_, okData := entry["data"]
+	_, okMetadata := entry["metadata"]
+	if okData && okMetadata {
+		entry = entry["data"].(map[string]interface{})
 	}
 
 	// Get CA to connect to k8s
